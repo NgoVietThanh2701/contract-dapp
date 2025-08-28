@@ -1,0 +1,478 @@
+[
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      }
+    ],
+    "name": "CreateHandOverEvent",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      }
+    ],
+    "name": "SignHandOverEvent",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_baseOn",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_senderUnit",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_senderRepresentative",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_senderPosition",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_receiverUnit",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_receiverRepresentative",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_receiverPosition",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "_receiverAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_deviceId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "string",
+        "name": "_deviceName",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_quantity",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_notes",
+        "type": "string"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_senderSignature",
+        "type": "bytes"
+      }
+    ],
+    "name": "createHandOver",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "getHandOversByReceiver",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "uid",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "receiverAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "isSigned",
+            "type": "bool"
+          },
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "baseOn",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "dateHandOver",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "senderUnit",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "senderRepresentative",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "senderPosition",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "receiverUnit",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "receiverRepresentative",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "receiverPosition",
+                "type": "string"
+              },
+              {
+                "internalType": "bytes32",
+                "name": "deviceId",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "string",
+                "name": "deviceName",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "quantity",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "notes",
+                "type": "string"
+              },
+              {
+                "internalType": "bytes",
+                "name": "receiverSignature",
+                "type": "bytes"
+              },
+              {
+                "internalType": "bytes",
+                "name": "senderSignature",
+                "type": "bytes"
+              }
+            ],
+            "internalType": "struct HandOverDetails",
+            "name": "handOverDetails",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct HandOverInfo[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "getHandOversBySender",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "uid",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "receiverAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "isSigned",
+            "type": "bool"
+          },
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "baseOn",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "dateHandOver",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "senderUnit",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "senderRepresentative",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "senderPosition",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "receiverUnit",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "receiverRepresentative",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "receiverPosition",
+                "type": "string"
+              },
+              {
+                "internalType": "bytes32",
+                "name": "deviceId",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "string",
+                "name": "deviceName",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "quantity",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "notes",
+                "type": "string"
+              },
+              {
+                "internalType": "bytes",
+                "name": "receiverSignature",
+                "type": "bytes"
+              },
+              {
+                "internalType": "bytes",
+                "name": "senderSignature",
+                "type": "bytes"
+              }
+            ],
+            "internalType": "struct HandOverDetails",
+            "name": "handOverDetails",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct HandOverInfo[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "getHandOversIsSigned",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "uid",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "senderAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "receiverAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "isSigned",
+            "type": "bool"
+          },
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "baseOn",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "dateHandOver",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "senderUnit",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "senderRepresentative",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "senderPosition",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "receiverUnit",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "receiverRepresentative",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "receiverPosition",
+                "type": "string"
+              },
+              {
+                "internalType": "bytes32",
+                "name": "deviceId",
+                "type": "bytes32"
+              },
+              {
+                "internalType": "string",
+                "name": "deviceName",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "quantity",
+                "type": "uint256"
+              },
+              {
+                "internalType": "string",
+                "name": "notes",
+                "type": "string"
+              },
+              {
+                "internalType": "bytes",
+                "name": "receiverSignature",
+                "type": "bytes"
+              },
+              {
+                "internalType": "bytes",
+                "name": "senderSignature",
+                "type": "bytes"
+              }
+            ],
+            "internalType": "struct HandOverDetails",
+            "name": "handOverDetails",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct HandOverInfo[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_uid",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_receiverSignature",
+        "type": "bytes"
+      }
+    ],
+    "name": "signHandOver",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
