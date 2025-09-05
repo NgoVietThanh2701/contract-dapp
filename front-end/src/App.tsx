@@ -4,8 +4,8 @@ import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import LoginMetamask from "./pages/LoginMetamask";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { ethers, providers } from "ethers";
+import { useEffect, useState } from "react";
+import { ethers } from "ethers";
 import WaitSignPage from "./pages/WaitSignPage";
 import CreatePage from "./pages/CreatePage";
 
@@ -77,8 +77,6 @@ export default function App() {
       window.ethereum.removeListener("chainChanged", handleChainChanged);
     };
   }, []);
-
-  console.log(address);
 
   const disconnectWallet = () => {
     setWeb3Provider(null);
