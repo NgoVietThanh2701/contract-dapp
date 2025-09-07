@@ -1,17 +1,17 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router";
-import NotFound from "./pages/OtherPage/NotFound";
-import AppLayout from "./layout/AppLayout";
-import { ScrollToTop } from "./components/common/ScrollToTop";
-import Home from "./pages/Dashboard/Home";
-import LoginMetamask from "./pages/LoginMetamask";
-import { useEffect, useState } from "react";
-import { ethers } from "ethers";
-import WaitSignPage from "./pages/WaitSignPage";
-import CreatePage from "./pages/CreatePage";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router';
+import NotFound from './pages/OtherPage/NotFound';
+import AppLayout from './layout/AppLayout';
+import { ScrollToTop } from './components/common/ScrollToTop';
+import Home from './pages/Dashboard/Home';
+import LoginMetamask from './pages/LoginMetamask';
+import { useEffect, useState } from 'react';
+import { ethers } from 'ethers';
+import WaitSignPage from './pages/WaitSignPage';
+import CreatePage from './pages/CreatePage';
 
 export default function App() {
   const [web3Provider, setWeb3Provider] = useState(null);
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState('');
 
   const setupProvider = async (provider: any) => {
     const signer = provider.getSigner();
@@ -22,7 +22,7 @@ export default function App() {
 
   const connectWallet = async (requestAccess = false) => {
     if (!window.ethereum) {
-      alert("Please install MetaMask!");
+      alert('Please install MetaMask!');
       return;
     }
     try {
@@ -30,24 +30,23 @@ export default function App() {
         window.ethereum,
         undefined
       );
-      const method = requestAccess ? "eth_requestAccounts" : "eth_accounts";
-      console.log(method);
+      const method = requestAccess ? 'eth_requestAccounts' : 'eth_accounts';
       const accounts = await provider.send(method, []);
 
       if (accounts.length > 0) {
         await setupProvider(provider);
-        localStorage.setItem("isWalletConnected", "true");
+        localStorage.setItem('isWalletConnected', 'true');
       } else {
-        localStorage.removeItem("isWalletConnected");
+        localStorage.removeItem('isWalletConnected');
       }
     } catch (error) {
       console.log(error);
-      localStorage.removeItem("isWalletConnected");
+      localStorage.removeItem('isWalletConnected');
     }
   };
 
   useEffect(() => {
-    if (localStorage.getItem("isWalletConnected") === "true") {
+    if (localStorage.getItem('isWalletConnected') === 'true') {
       connectWallet(false);
     }
   }, []);
@@ -60,8 +59,8 @@ export default function App() {
         await setupProvider(provider);
       } else {
         setWeb3Provider(null);
-        setAddress("");
-        localStorage.removeItem("isWalletConnected");
+        setAddress('');
+        localStorage.removeItem('isWalletConnected');
       }
     };
 
@@ -69,19 +68,19 @@ export default function App() {
       window.location.reload();
     };
 
-    window.ethereum.on("accountsChanged", handleAccountsChanged);
-    window.ethereum.on("chainChanged", handleChainChanged);
+    window.ethereum.on('accountsChanged', handleAccountsChanged);
+    window.ethereum.on('chainChanged', handleChainChanged);
 
     return () => {
-      window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
-      window.ethereum.removeListener("chainChanged", handleChainChanged);
+      window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+      window.ethereum.removeListener('chainChanged', handleChainChanged);
     };
   }, []);
 
   const disconnectWallet = () => {
     setWeb3Provider(null);
-    setAddress("");
-    localStorage.removeItem("isWalletConnected");
+    setAddress('');
+    localStorage.removeItem('isWalletConnected');
   };
 
   return (

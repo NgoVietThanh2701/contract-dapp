@@ -93,9 +93,9 @@
         "type": "string"
       },
       {
-        "internalType": "bytes",
+        "internalType": "string",
         "name": "_senderSignature",
-        "type": "bytes"
+        "type": "string"
       }
     ],
     "name": "createHandOver",
@@ -198,14 +198,14 @@
                 "type": "string"
               },
               {
-                "internalType": "bytes",
+                "internalType": "string",
                 "name": "receiverSignature",
-                "type": "bytes"
+                "type": "string"
               },
               {
-                "internalType": "bytes",
+                "internalType": "string",
                 "name": "senderSignature",
-                "type": "bytes"
+                "type": "string"
               }
             ],
             "internalType": "struct HandOverDetails",
@@ -316,14 +316,14 @@
                 "type": "string"
               },
               {
-                "internalType": "bytes",
+                "internalType": "string",
                 "name": "receiverSignature",
-                "type": "bytes"
+                "type": "string"
               },
               {
-                "internalType": "bytes",
+                "internalType": "string",
                 "name": "senderSignature",
-                "type": "bytes"
+                "type": "string"
               }
             ],
             "internalType": "struct HandOverDetails",
@@ -434,14 +434,14 @@
                 "type": "string"
               },
               {
-                "internalType": "bytes",
+                "internalType": "string",
                 "name": "receiverSignature",
-                "type": "bytes"
+                "type": "string"
               },
               {
-                "internalType": "bytes",
+                "internalType": "string",
                 "name": "senderSignature",
-                "type": "bytes"
+                "type": "string"
               }
             ],
             "internalType": "struct HandOverDetails",
@@ -465,9 +465,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "bytes",
+        "internalType": "string",
         "name": "_receiverSignature",
-        "type": "bytes"
+        "type": "string"
       }
     ],
     "name": "signHandOver",

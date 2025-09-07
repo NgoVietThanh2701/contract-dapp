@@ -38,7 +38,7 @@ export default class HandOverContract extends BaseInterface {
       receiverRepresent,
       receiverPosition,
       receiverAddress,
-      deviceId,
+      ethers.utils.formatBytes32String(deviceId),
       deviceName,
       quantity,
       notes,

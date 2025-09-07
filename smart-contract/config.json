@@ -1,7 +1,7 @@
 {
-  "dev": {},
-  "arbitest": {
-    "HandOver": "0x9D1fC61bbD9727264F4EBC96bDb39453A7F274d3"
-  },
-  "main": {}
+   "dev": {},
+   "sepolia": {
+      "HandOver": "0xb146160E427FdC65Cf267D3a24cB5f6945ec7C7b"
+   },
+   "main": {}
 }

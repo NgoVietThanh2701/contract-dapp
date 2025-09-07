@@ -12,6 +12,7 @@
   "dependencies": {
     "@mui/x-data-grid": "^6.18.2",
     "@tailwindcss/vite": "^4.0.8",
+    "axios": "^1.11.0",
     "dotenv": "^17.2.1",
     "ethers": "^5.7.2",
     "flatpickr": "^4.6.13",
@@ -21,6 +22,7 @@
     "react-hot-toast": "^2.6.0",
     "react-jazzicon": "^1.0.4",
     "react-router": "^7.1.5",
+    "react-signature-canvas": "^1.1.0-alpha.2",
     "react-spinners": "^0.17.0",
     "swiper": "^11.2.3",
     "tailwindcss": "^4.0.8"

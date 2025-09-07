@@ -33,7 +33,7 @@ describe("Hand Overs", () => {
             "Thiết bị giám sát thông minh",
             27,
             "Tải trọng nhẹ note",
-            ethers.utils.toUtf8Bytes("chu ky so cua sender"),
+            "chukysocuarsender",
          );
 
       // get hand over of receiver
@@ -53,16 +53,12 @@ describe("Hand Overs", () => {
       let handOverIsSigned = await handOver.getHandOversIsSigned(sender.address);
       expect(handOverIsSigned.length).equal(0);
       // receiver sign hand over
-      const signatureSender = "chu ky so cua sender";
-      await handOver
-         .connect(receiver)
-         .signHandOver(handOversReceiver[0].uid, ethers.utils.toUtf8Bytes(signatureSender));
+      const signatureReceiver = "chu ky so cua receiver";
+      await handOver.connect(receiver).signHandOver(handOversReceiver[0].uid, signatureReceiver);
       handOverIsSigned = await handOver.getHandOversIsSigned(sender.address);
       expect(handOverIsSigned.length).equal(1);
       expect(handOverIsSigned[0].isSigned).equal(true);
-      expect(
-         ethers.utils.toUtf8String(handOverIsSigned[0].handOverDetails.receiverSignature),
-      ).equal(signatureSender);
+      expect(handOverIsSigned[0].handOverDetails.receiverSignature).equal(signatureReceiver);
       console.log(handOverIsSigned[0]);
    });
 });

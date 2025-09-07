@@ -1,12 +1,14 @@
 import PageMeta from '../components/common/PageMeta';
 import PageBreadcrumb from '../components/common/PageBreadcrumb';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useOutletContext } from 'react-router';
 import HandOverContract from '../contracts/HandOverContract';
 import { ethers } from 'ethers';
 import { getAbiHandOver, HAND_OVER_ADDRESS } from '../contracts/config';
 import toast, { Toaster } from 'react-hot-toast';
 import Loading from '../components/Loading';
+import SignatureCanvas from 'react-signature-canvas';
+import axios from 'axios';
 
 interface FormData {
   baseOn: string;
@@ -24,10 +26,19 @@ interface FormData {
   senderSignature: string;
 }
 
+const pinataConfig = {
+  root: 'https://api.pinata.cloud',
+  headers: {
+    pinata_api_key: import.meta.env.VITE_APP_PINATA_APIKEY,
+    pinata_secret_api_key: import.meta.env.VITE_APP_PINATA_SECRETKEY
+  }
+};
+
 const CreatePage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { web3Provider, address } = useOutletContext<any>();
   const [isLoading, setIsLoading] = useState(false);
+  const sigCanvas = useRef<SignatureCanvas>(null);
 
   const [formData, setFormData] = useState<FormData>({
     baseOn: '',
@@ -45,6 +56,24 @@ const CreatePage = () => {
     senderSignature: ''
   });
 
+  const saveSignature = () => {
+    if (sigCanvas.current) {
+      const dataURL = sigCanvas.current.toDataURL();
+      setFormData((prev) => ({
+        ...prev,
+        senderSignature: dataURL // Lưu chữ ký dạng base64
+      }));
+    }
+  };
+
+  const clearSignature = () => {
+    sigCanvas.current?.clear();
+    setFormData((prev) => ({
+      ...prev,
+      senderSignature: ''
+    }));
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -55,12 +84,47 @@ const CreatePage = () => {
     }));
   };
 
+  function base64ToFile(base64Data: string, filename = 'signature.png'): File {
+    const [meta, content] = base64Data.split(',');
+    const mime = meta.match(/:(.*?);/)![1];
+    const byteArray = Uint8Array.from(atob(content), (c) => c.charCodeAt(0));
+    return new File([byteArray], filename, { type: mime });
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (web3Provider & address) return;
     try {
+      const url = `${pinataConfig.root}/pinning/pinFileToIPFS`;
+
+      const formDataToUpload = new FormData();
+      if (formData.senderSignature) {
+        const blob = base64ToFile(formData.senderSignature);
+        const file = new File([blob], 'signature.png', {
+          type: 'image/png'
+        });
+
+        formDataToUpload.append('file', file);
+        formDataToUpload.append(
+          'pinataOptions',
+          JSON.stringify({ cidVersion: 1 })
+        );
+        formDataToUpload.append(
+          'pinataMetadata',
+          JSON.stringify({ name: 'signature.png' })
+        );
+      }
+
+      const response = await axios({
+        method: 'post',
+        url: url,
+        data: formDataToUpload,
+        headers: pinataConfig.headers
+      });
+      const urlImage = `https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}`;
       const handOverContract = new HandOverContract(web3Provider);
       listenEvent();
+      setIsLoading(true);
       await handOverContract.createHandOver(
         formData.baseOn,
         formData.senderUnit,
@@ -74,7 +138,7 @@ const CreatePage = () => {
         formData.deviceName,
         formData.quantity,
         formData.notes,
-        formData.senderSignature
+        urlImage
       );
       setFormData({
         baseOn: '',
@@ -91,6 +155,8 @@ const CreatePage = () => {
         notes: '',
         senderSignature: ''
       });
+      clearSignature();
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -103,7 +169,7 @@ const CreatePage = () => {
       getAbiHandOver(),
       web3Provider
     );
-    contract.once('CreateHandOverEvent', (_uid) => {
+    contract.once('CreateHandOverEvent', (uid) => {
       setIsLoading(false);
       toast.success('Success', { position: 'top-center' });
     });
@@ -197,6 +263,7 @@ const CreatePage = () => {
                     className="w-full border rounded-lg p-2"
                   />
                 </div>
+
                 <div>
                   <label className="md:text-left  block mb-1">Vị trí (B)</label>
                   <input
@@ -207,10 +274,7 @@ const CreatePage = () => {
                     className="w-full border rounded-lg p-2"
                   />
                 </div>
-              </div>
 
-              {/* Right Column */}
-              <div className="space-y-4">
                 <div>
                   <label className="md:text-left  block mb-1">
                     Địa chỉ người nhận
@@ -223,6 +287,10 @@ const CreatePage = () => {
                     className="w-full border rounded-lg p-2"
                   />
                 </div>
+              </div>
+
+              {/* Right Column */}
+              <div className="space-y-4">
                 <div>
                   <label className="md:text-left  block mb-1">
                     ID thiết bị
@@ -271,19 +339,36 @@ const CreatePage = () => {
                   />
                 </div>
 
-                <div>
-                  <label className="md:text-left  block mb-1">
-                    Chữ ký bên A
-                  </label>
-                  <input
-                    type="text"
-                    name="senderSignature"
-                    value={formData.senderSignature}
-                    onChange={handleChange}
-                    className="w-full border rounded-lg p-2 font-mono"
-                    placeholder="0x..."
+                <div className="border rounded-lg">
+                  <SignatureCanvas
+                    penColor="black"
+                    ref={sigCanvas}
+                    canvasProps={{
+                      height: 120,
+                      className: 'sigCanvas'
+                    }}
                   />
                 </div>
+                <div className="mt-3 space-x-2">
+                  <button
+                    type="button"
+                    onClick={saveSignature}
+                    className="px-3 py-1 bg-blue-600 text-white rounded"
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    onClick={clearSignature}
+                    className="px-3 py-1 bg-gray-500 text-white rounded"
+                  >
+                    Clear
+                  </button>
+                </div>
+
+                {formData.senderSignature && (
+                  <img src={formData.senderSignature} alt="Chukyso" />
+                )}
               </div>
             </div>
 

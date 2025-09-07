@@ -14,8 +14,8 @@ struct HandOverDetails {
    string deviceName;
    uint256 quantity;
    string notes;
-   bytes receiverSignature;
-   bytes senderSignature;
+   string receiverSignature;
+   string senderSignature;
 }
 
 struct HandOverInfo {
@@ -51,7 +51,7 @@ contract HandOver {
       string calldata _deviceName,
       uint256 _quantity,
       string calldata _notes,
-      bytes calldata _senderSignature
+      string calldata _senderSignature
    ) external {
       require(_receiverAddress != address(0), "Receiver zero address");
       require(_quantity > 0, "Quantity must be > 0");
@@ -151,7 +151,7 @@ contract HandOver {
       return hand_overs;
    }
 
-   function signHandOver(uint256 _uid, bytes calldata _receiverSignature) external {
+   function signHandOver(uint256 _uid, string calldata _receiverSignature) external {
       require(_uid > 0, "Invalid UID");
       HandOverInfo storage hand_over = handOverInfos[_uid];
       require(msg.sender == hand_over.receiverAddress, "Only receiver can sign");
