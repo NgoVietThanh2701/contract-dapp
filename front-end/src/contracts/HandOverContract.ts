@@ -46,4 +46,25 @@ export default class HandOverContract extends BaseInterface {
       this._option
     );
   }
+
+  async getHandOversByReceiver(address: string) {
+    const handOversReceiver = await this._contract.getHandOversByReceiver(
+      address
+    );
+    return handOversReceiver;
+  }
+
+  async getHandOversBySender(address: string) {
+    const handOversSender = await this._contract.getHandOversBySender(address);
+    return handOversSender;
+  }
+
+  async getHandOversIsSigned(address: string) {
+    const handOversHistory = await this._contract.getHandOversIsSigned(address);
+    return handOversHistory;
+  }
+
+  async signHandOver(uid: number, receiverSignature: string) {
+    await this._contract.signHandOver(uid, receiverSignature, this._option);
+  }
 }

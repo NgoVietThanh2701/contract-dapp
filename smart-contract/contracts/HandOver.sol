@@ -85,7 +85,6 @@ contract HandOver {
    function getHandOversIsSigned(address _address) external view returns (HandOverInfo[] memory) {
       uint256 count = 0;
 
-      // Đếm số phần tử hợp lệ
       for (uint256 i = 1; i < uid; i++) {
          if (
             (handOverInfos[i].senderAddress == _address ||

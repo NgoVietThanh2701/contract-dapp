@@ -1,5 +1,5 @@
-import { TransactionResponse } from "@ethersproject/abstract-provider";
-import { BigNumber, ethers, Overrides, providers } from "ethers";
+import { TransactionResponse } from '@ethersproject/abstract-provider';
+import { BigNumber, ethers, Overrides } from 'ethers';
 
 export default class BaseInterface {
   _provider: ethers.providers.Web3Provider | ethers.providers.JsonRpcProvider;

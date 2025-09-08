@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import WaitSignPage from './pages/WaitSignPage';
 import CreatePage from './pages/CreatePage';
+import HistoryHandOver from './pages/HistoryHandOver';
 
 export default function App() {
   const [web3Provider, setWeb3Provider] = useState(null);
@@ -103,8 +104,22 @@ export default function App() {
               path="/"
               element={address ? <Home /> : <Navigate to="/connect-metamask" />}
             />
-            <Route path="wait-sign" element={<WaitSignPage />} />
-            <Route path="create" element={<CreatePage />} />
+            <Route
+              path="create"
+              element={
+                address ? <CreatePage /> : <Navigate to="/connect-metamask" />
+              }
+            />
+            <Route
+              path="history"
+              element={
+                address ? (
+                  <HistoryHandOver />
+                ) : (
+                  <Navigate to="/connect-metamask" />
+                )
+              }
+            />
           </Route>
           <Route
             path="/connect-metamask"
