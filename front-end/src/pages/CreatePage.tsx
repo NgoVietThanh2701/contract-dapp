@@ -169,6 +169,7 @@ const CreatePage = () => {
       getAbiHandOver(),
       web3Provider
     );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     contract.once('CreateHandOverEvent', (uid) => {
       setIsLoading(false);
       toast.success('Success', { position: 'top-center' });

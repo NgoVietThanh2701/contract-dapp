@@ -1,14 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import PageMeta from '../components/common/PageMeta';
 import PageBreadcrumb from '../components/common/PageBreadcrumb';
 import nodata_img from '../assets/nodata.jpg';
-import {
-  Tabs,
-  TabsHeader,
-  TabsBody,
-  TabPanel,
-  Tab
-} from '@material-tailwind/react';
 import { ethers } from 'ethers';
 import { useOutletContext } from 'react-router';
 import HandOverContract from '../contracts/HandOverContract';
@@ -90,6 +83,21 @@ const HistoryHandOver = () => {
     )
   };
 
+  // Lọc rows theo deviceName hoặc baseOn
+  const [filterText, setFilterText] = useState('');
+
+  const filteredRows = useMemo(() => {
+    if (!filterText) return handOversHistory;
+    return handOversHistory.filter((row: any) => {
+      const deviceName = row.handOverDetails?.deviceName?.toLowerCase() || '';
+      const baseOn = row.handOverDetails?.baseOn?.toLowerCase() || '';
+      return (
+        deviceName.includes(filterText.toLowerCase()) ||
+        baseOn.includes(filterText.toLowerCase())
+      );
+    });
+  }, [handOversHistory, filterText]);
+
   return (
     <>
       {modal && (
@@ -106,10 +114,20 @@ const HistoryHandOver = () => {
       <PageBreadcrumb pageTitle="Basic Tables" />
       <div className="min-h-screen rounded-2xl border border-gray-200 bg-white px-5 py-7 dark:border-gray-800 dark:bg-white/[0.03] xl:px-10 xl:py-12">
         <div className="mx-auto w-full text-center">
+          {/* Thanh filter */}
+          <div className="flex items-center gap-2 mb-2">
+            <input
+              type="text"
+              placeholder="Tìm theo thiết bị hoặc căn cứ..."
+              className="px-3 py-2 border rounded-lg w-72 text-sm"
+              value={filterText}
+              onChange={(e) => setFilterText(e.target.value)}
+            />
+          </div>
           {handOversHistory.length > 0 ? (
             <DataTable
               columns={columns.concat(actionView)}
-              rows={handOversHistory}
+              rows={filteredRows}
             />
           ) : (
             <div className="flex flex-col gap-3 items-center justify-center mt-10">

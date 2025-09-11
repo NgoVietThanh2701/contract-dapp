@@ -97,7 +97,7 @@ const Home = () => {
     field: 'action',
     headerName: 'Thao tác',
     width: 110,
-    renderCell: (params) => (
+    renderCell: (params: any) => (
       <button
         onClick={() => handleSign(params.row)}
         className="text-white bg-green-500 px-3 py-1.5 rounded-md"
@@ -167,9 +167,11 @@ const Home = () => {
                 className:
                   'bg-transparent border-b-2 border-gray-900 shadow-none rounded-none'
               }}
+              {...({} as any)}
             >
               {data.map(({ label, value }) => (
                 <Tab
+                  {...({} as any)}
                   key={value}
                   value={value}
                   onClick={() => setActiveTab(value)}
@@ -181,7 +183,7 @@ const Home = () => {
                 </Tab>
               ))}
             </TabsHeader>
-            <TabsBody>
+            <TabsBody {...({} as any)}>
               {data.map(({ value, desc }) => (
                 <TabPanel key={value} value={value}>
                   {desc}
@@ -197,6 +199,7 @@ const Home = () => {
 
 export default Home;
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const columns = [
   {
     field: 'uid',
@@ -233,18 +236,6 @@ export const columns = [
       <div>{params.row.handOverDetails.senderPosition}</div>
     )
   },
-  // {
-  //   field: 'senderSignature',
-  //   headerName: 'Chữ ký',
-  //   width: 130,
-  //   renderCell: (params: any) => (
-  //     <img
-  //       className="w-[700px] object-cover"
-  //       src={params.row.handOverDetails.senderSignature}
-  //       alt="Chukyso"
-  //     />
-  //   )
-  // },
   {
     field: 'receiverUnit',
     headerName: 'Đơn vị B',
