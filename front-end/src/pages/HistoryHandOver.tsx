@@ -10,10 +10,13 @@ import { columns } from './Dashboard/Home';
 import ModalView from '../components/ModalView';
 
 const HistoryHandOver = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [handOversHistory, setHandOversHistory] = useState<any>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { address, web3Provider } = useOutletContext<any>();
 
   const [modal, setModal] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [handOver, setHandOver] = useState<any>();
 
   const getHandOversHistory = async () => {
@@ -64,6 +67,7 @@ const HistoryHandOver = () => {
     };
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleView = (handOvera: any) => {
     setHandOver(handOvera);
     setModal(true);
@@ -73,6 +77,7 @@ const HistoryHandOver = () => {
     field: 'action',
     headerName: 'Thao tác',
     width: 110,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     renderCell: (params: any) => (
       <button
         onClick={() => handleView(params.row)}
@@ -88,6 +93,7 @@ const HistoryHandOver = () => {
 
   const filteredRows = useMemo(() => {
     if (!filterText) return handOversHistory;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return handOversHistory.filter((row: any) => {
       const deviceName = row.handOverDetails?.deviceName?.toLowerCase() || '';
       const baseOn = row.handOverDetails?.baseOn?.toLowerCase() || '';
